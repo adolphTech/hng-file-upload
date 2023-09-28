@@ -23,7 +23,7 @@
             const form = document.querySelector('#my-form');
             const formData = new FormData(form);
             try {
-                const response = await fetch('http://localhost:3000/upload-video', {
+                const response = await fetch('/upload-video', {
                     method: 'POST',
                     body: formData,
                 });
