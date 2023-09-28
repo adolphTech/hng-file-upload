@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.post('/upload-video', upload.single('my-video'), (req, res) => {
+app.post('/api/upload-video', upload.single('my-video'), (req, res) => {
     if (req.file) {
         // Generate a URL link to the uploaded video
         const videoUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
