@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploader</title>
+</head>
+<body>
+    <h1>File uploader</h1>
+
+    <form id="my-form">
+        <input type="file" name="my-video" accept="video/*">
+    </form>
+    <button id="upload-btn">Upload Video</button>
+
+    <div id="upload-message"></div>
+
+    <script>
+        const uploadButton = document.querySelector('#upload-btn');
+        const uploadMessage = document.querySelector('#upload-message');
+
+        uploadButton.addEventListener('click', async (e) => {
+            const form = document.querySelector('#my-form');
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('http://localhost:3000/upload-video', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.json(); // Parse JSON response
+
+                    console.log(data)
+                    const link = data.link;
+                    const message = data.message;
+
+                    // Display the link and message
+                    uploadMessage.innerHTML = `Video uploaded successfully. You can access it <a href="${link}" target="_blank">here</a>.<br>${message}`;
+                } else {
+                    uploadMessage.innerHTML = 'Failed to upload the video.';
+                }
+            } catch (error) {
+                uploadMessage.innerHTML = 'An error occurred: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
